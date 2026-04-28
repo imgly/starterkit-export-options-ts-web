@@ -3,7 +3,7 @@
 Export designs in JPG, PNG, or PDF with custom quality, page ranges, and dimensions using CE.SDK's advanced export features. Built with [CE.SDK](https://img.ly/creative-sdk) by [IMG.LY](https://img.ly), runs entirely in the browser with no server dependencies.
 
 <p>
-  <a href="https://img.ly/docs/cesdk/js/starterkits/export-options-expopt1/">Documentation</a>
+  <a href="https://img.ly/docs/cesdk/js/starterkits/export-options-expopt/">Documentation</a>
 </p>
 
 ![Export Options Editor starter kit showing an export panel with format, quality, and resolution settings](./hero.webp)
