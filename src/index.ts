@@ -18,26 +18,30 @@ import { resolveAssetPath } from './imgly/resolveAssetPath';
 // ============================================================================
 
 const config = {
-  // Unique user identifier for analytics (customize for your app)
-  userId: 'starterkit-export-options-editor-user'
+  userId: 'starterkit-export-options-user',
 
-  // Local assets (uncomment and set path for self-hosted assets)
-  // baseURL: `/assets/`,
+  // IMG.LY CDN (for quick testing only, NOT recommended for production)
 
-  // License key (required for production)
-  // license: 'YOUR_LICENSE_KEY',
+  // Local assets for development
+
 };
 
 // ============================================================================
-// Initialize Export Options Editor
+// Initialize Editor
 // ============================================================================
 
-CreativeEditorSDK.create('#cesdk_container', config)
-  .then(async (cesdk) => {
+/**
+ * Initialize the CE.SDK Export Options Editor
+ */
+async function initializeEditor(): Promise<void> {
+  try {
+    // Create new CE.SDK instance
+    const cesdk = await CreativeEditorSDK.create('#cesdk_container', config);
+
     // Debug access (remove in production)
     (window as any).cesdk = cesdk;
 
-    // Initialize the export options editor
+    // Initialize with export options configuration
     await initExportOptionsEditor(cesdk);
 
     // ============================================================================
@@ -46,8 +50,11 @@ CreativeEditorSDK.create('#cesdk_container', config)
 
     // Load the demo scene
     await cesdk.loadFromURL(resolveAssetPath('/assets/example-1.scene'));
-  })
-  .catch((error) => {
+  } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Failed to initialize CE.SDK:', error);
-  });
+  }
+}
+
+// Start the editor
+initializeEditor();
