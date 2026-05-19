@@ -1,5 +1,5 @@
 {
-  "name": "starterkit-export-options-editor",
+  "name": "starterkit-export-options",
   "version": "1.0.0",
   "description": "CE.SDK Starterkit - Export Options Editor",
   "scripts": {
@@ -9,10 +9,12 @@
     "check:syntax": "tsc --noEmit"
   },
   "dependencies": {
-    "@cesdk/cesdk-js": "latest"
+    "@cesdk/cesdk-js": "^1.75.0",
+    "@cesdk/engine": "^1.75.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
-    "vite": "^6.0.3"
+    "vite": "^6.0.3",
+    "@types/node": "^20.0.0"
   }
 }
