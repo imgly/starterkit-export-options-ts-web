@@ -5,13 +5,14 @@
  * (JPEG, PNG, PDF), quality settings, resolution control, and page range
  * selection for multi-page documents.
  *
- * @see https://img.ly/docs/cesdk/js/getting-started/
+ * @see https://img.ly/docs/cesdk/js/get-started/overview-e18f40/
  */
 
 import CreativeEditorSDK from '@cesdk/cesdk-js';
 
 import { initExportOptionsEditor } from './imgly';
 import { resolveAssetPath } from './imgly/resolveAssetPath';
+
 
 // ============================================================================
 // Configuration
@@ -49,7 +50,7 @@ async function initializeEditor(): Promise<void> {
     // ============================================================================
 
     // Load the demo scene
-    await cesdk.loadFromURL(resolveAssetPath('/assets/example-1.scene'));
+    await cesdk.load(resolveAssetPath('/assets/example-1.scene'));
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Failed to initialize CE.SDK:', error);
