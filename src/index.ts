@@ -11,7 +11,7 @@
 import CreativeEditorSDK from '@cesdk/cesdk-js';
 
 import { initExportOptionsEditor } from './imgly';
-import { resolveAssetPath } from './imgly/resolveAssetPath';
+import { DEMO_ASSETS_BASE_URL } from './imgly/demo-assets';
 
 
 // ============================================================================
@@ -39,8 +39,6 @@ async function initializeEditor(): Promise<void> {
     // Create new CE.SDK instance
     const cesdk = await CreativeEditorSDK.create('#cesdk_container', config);
 
-    // Debug access (remove in production)
-    (window as any).cesdk = cesdk;
 
     // Initialize with export options configuration
     await initExportOptionsEditor(cesdk);
@@ -50,7 +48,7 @@ async function initializeEditor(): Promise<void> {
     // ============================================================================
 
     // Load the demo scene
-    await cesdk.load(resolveAssetPath('/assets/example-1.scene'));
+    await cesdk.load(`${DEMO_ASSETS_BASE_URL}/assets/example-1.scene`);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Failed to initialize CE.SDK:', error);
