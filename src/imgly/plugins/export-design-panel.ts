@@ -33,26 +33,30 @@ const AVAILABLE_FORMATS = [
 
 type Formats = (typeof AVAILABLE_FORMATS)[number];
 
-enum PageAmountType {
-  ALL = 'all',
-  RANGE = 'range'
-}
+const PageAmountType = {
+  ALL: 'all',
+  RANGE: 'range'
+} as const;
+type PageAmountType = (typeof PageAmountType)[keyof typeof PageAmountType];
 
-enum ResolutionItemValue {
-  Small = 'small',
-  Original = 'original',
-  Large = 'large',
-  Huge = 'huge',
-  Custom = 'custom'
-}
+const ResolutionItemValue = {
+  Small: 'small',
+  Original: 'original',
+  Large: 'large',
+  Huge: 'huge',
+  Custom: 'custom'
+} as const;
+type ResolutionItemValue =
+  (typeof ResolutionItemValue)[keyof typeof ResolutionItemValue];
 
-export enum QualityType {
-  Low = 'low',
-  Medium = 'medium',
-  High = 'high',
-  VeryHigh = 'very-high',
-  Maximum = 'maximum'
-}
+export const QualityType = {
+  Low: 'low',
+  Medium: 'medium',
+  High: 'high',
+  VeryHigh: 'very-high',
+  Maximum: 'maximum'
+} as const;
+export type QualityType = (typeof QualityType)[keyof typeof QualityType];
 
 const QualityJpeg = {
   [QualityType.Low]: 0.2,
@@ -78,11 +82,11 @@ const QUALITY_SELECT_VALUES = [
   { id: QualityType.Maximum, label: `quality/${QualityType.Maximum}` }
 ];
 
-const QUALITY_DEFAULT_VALUE = QUALITY_SELECT_VALUES[2];
+const QUALITY_DEFAULT_VALUE = QUALITY_SELECT_VALUES[2]!;
 
 type ResolutionScaleValue = Exclude<
   ResolutionItemValue,
-  ResolutionItemValue.Custom
+  typeof ResolutionItemValue.Custom
 >;
 
 const RESOLUTION_SCALE: Record<ResolutionScaleValue, number> = {
@@ -117,7 +121,7 @@ const RESOLUTION_SELECT_VALUES = [
   }
 ];
 
-const RESOLUTION_DEFAULT_VALUE = RESOLUTION_SELECT_VALUES[1];
+const RESOLUTION_DEFAULT_VALUE = RESOLUTION_SELECT_VALUES[1]!;
 
 type SelectValue = { id: string; label: string | string[] };
 
@@ -156,7 +160,7 @@ export const getPagesFromRange = (
   pageRanges.forEach((range: string) => {
     if (range.includes('-')) {
       const [start, end] = range.split('-').map(Number);
-      for (let i = start; i <= end; i++) {
+      for (let i = start!; i <= end!; i++) {
         pageIndexes.push(i);
       }
     } else {
@@ -301,9 +305,9 @@ export const exportDesignBlobs = async (
 
   // each page is exported separately
   const blobs: Blob[] = [];
-  for (let i = 0; i < filteredPages.length; i++) {
+  for (const page of filteredPages) {
     blobs.push(
-      await engine.block.export(filteredPages[i], {
+      await engine.block.export(page, {
         mimeType: mimeType,
         targetWidth: exportPageWidth,
         targetHeight: exportPageHeight,
@@ -333,8 +337,8 @@ const exportDesign = async (
     qualityType
   );
 
-  for (let i = 0; i < blobs.length; i++) {
-    await cesdk.utils.downloadFile(blobs[i], mimeType);
+  for (const blob of blobs) {
+    await cesdk.utils.downloadFile(blob, mimeType);
   }
 };
 
@@ -419,7 +423,7 @@ export function setupExportDesignPanel(cesdk: CreativeEditorSDK): void {
       const scale =
         resolutionState.value.id === ResolutionItemValue.Custom
           ? customScaleState.value
-          : RESOLUTION_SCALE[resolutionState.value.id as ResolutionItemValue];
+          : RESOLUTION_SCALE[resolutionState.value.id as ResolutionScaleValue];
 
       // Format selection section
       builder.Section('format-section', {
